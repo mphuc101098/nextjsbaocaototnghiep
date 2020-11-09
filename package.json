@@ -8,11 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@grapecity/spread-excelio": "^14.0.1",
     "bootstrap": "^4.5.3",
+    "file-saver": "^2.0.2",
+    "firebase": "^8.0.1",
     "newsapi": "^2.4.1",
     "next": "10.0.1",
     "react": "17.0.1",
     "react-bootstrap": "^1.4.0",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "xlsx": "^0.16.8"
   }
 }

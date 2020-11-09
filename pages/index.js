@@ -1,9 +1,11 @@
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 // import styles from '../styles/CustomHome.module.css'
 import styles from '../styles/stylesheet.module.css'
 import { Container, Row, Col, Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
 
 export default function Home() {
+
   return (
     <>
       <Head>
@@ -27,13 +29,6 @@ export default function Home() {
                   <Nav.Link href="#home">Home</Nav.Link>
                   <Nav.Link href="#link">Link</Nav.Link>
                   <Nav.Link href="dstruong">Danh sách trường</Nav.Link>
-                  <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                  </NavDropdown>
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
