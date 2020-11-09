@@ -1,0 +1,20 @@
+.headbanner {
+    background-color: rgb(33, 57, 190);
+    flex: 1;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.navbaritem {
+    margin-right: 100px;
+    text-align: end;
+}
+
+.main {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
