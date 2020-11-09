@@ -1,9 +1,27 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import XLSX from "xlsx";
 import { saveAs } from 'file-saver';
 import Head from 'next/head'
+import { Button } from 'react-bootstrap'
+import DataTable from 'react-data-table-component';
+import firebase from '../config/firebase';
+
+const columns = [
+    {
+        name: 'Mã Ngành',
+        selector: 'manganh',
+        sortable: true,
+    },
+    {
+        name: 'Tên Ngành',
+        selector: 'tennganh',
+        sortable: true,
+    },
+];
 
 export default function ImportNganh() {
+    const [data, setData] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     useEffect(() => {
         // const spread = _spread;
         // const fileName = "SalesData.xlsx";
@@ -31,10 +49,34 @@ export default function ImportNganh() {
                 const firstSheet = workbook.SheetNames[0];
                 const excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
                 console.log(firstSheet, excelRows);
+                setData(excelRows)
             };
             reader.readAsBinaryString(e.target.files[0]);
         }
     }, [])
+    const upload = useCallback(() => {
+        console.log('Upload...')
+        setIsLoading(true)
+        const db = firebase.firestore();
+        const batch = db.batch()
+        data.forEach((doc) => {
+            const docRef = db.collection("nganh").doc();
+            let manganh = [];
+            try {
+                manganh = JSON.parse(doc.manganh)
+            }
+            catch{}
+            batch.set(docRef, {
+                ...doc,
+                manganh,
+            });
+        });
+        console.log('Commiting...' + data.length)
+        batch.commit().then(() => {
+            setIsLoading(false)
+        })
+    }, [data])
+
 
     return (
         <>
@@ -44,9 +86,24 @@ export default function ImportNganh() {
             <div>
                 <input type="file" onChange={onChange} />
             </div>
-            <div className="dashboardRow">
-                <button className="btn btn-primary dashboardButton"
-                    onClick={() => { }}>Import from Excel</button>
+
+            <div>
+                <DataTable
+                    columns={columns}
+                    pagination
+                    data={data}
+                />
+            </div>
+
+            <div>
+       
+                <Button
+                    variant="primary"
+                    disabled={isLoading}
+                    onClick={upload}
+                >
+                    {isLoading ? 'Loading…' : 'Import'}
+                </Button>
             </div>
         </>
     )
