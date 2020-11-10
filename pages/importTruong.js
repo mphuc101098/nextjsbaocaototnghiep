@@ -68,7 +68,7 @@ export default function ImportTruong() {
             const docRef = db.collection("truong").doc();
             let manganh = [];
             try {
-                manganh = JSON.parse(doc.manganh)
+                manganh = JSON.parse(doc.manganh).map(item => item.toString())
             }
             catch{}
             batch.set(docRef, {

@@ -8,18 +8,18 @@ import firebase from '../config/firebase';
 
 const columns = [
     {
-        name: 'Mã Ngành',
-        selector: 'manganh',
+        name: 'Mã Nhóm Ngành',
+        selector: 'manhomnganh',
         sortable: true,
     },
     {
-        name: 'Tên Ngành',
-        selector: 'tennganh',
+        name: 'Tên Nhóm Ngành',
+        selector: 'tennhomnganh',
         sortable: true,
     },
 ];
 
-export default function ImportNganh() {
+export default function ImportNhomNganh() {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     useEffect(() => {
@@ -72,15 +72,15 @@ export default function ImportNganh() {
         const db = firebase.firestore();
         const batch = db.batch()
         data.forEach((doc) => {
-            const docRef = db.collection("nganh").doc();
-            let manganh = doc.manganh;
+            const docRef = db.collection("nhomnganh").doc();
+            let manhomnganh = doc.manhomnganh;
             try {
-                manganh = manganh.toString()
+                manhomnganh = manhomnganh.toString()
             }
             catch{}
             batch.set(docRef, {
                 ...doc,
-                manganh,
+                manhomnganh,
             });
         });
         console.log('Commiting...' + data.length)
